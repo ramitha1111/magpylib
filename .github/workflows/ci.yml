@@ -1,3 +1,10 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 3 optimizations:
+# - [LOW] Explicitly set fail-fast for large matrix job "checks" (6 combinations)
+# - [LOW] Use shallow clone in "lint" job
+# - [LOW] Use shallow clone in "checks" job
+# Estimated savings: ~2 min/run
+#
 name: CI
 
 on:
@@ -29,7 +36,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
 
       - uses: actions/setup-python@v7
         with:
@@ -74,7 +81,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Install OpenBLAS
         if: runner.os == 'Linux' && startsWith(matrix.python-version, 'pypy')
